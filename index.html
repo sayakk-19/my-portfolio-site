@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      // On refresh, choose Home before the browser restores the old scroll
+      // position or React reads the section hash for initial navigation.
+      if (performance.getEntriesByType('navigation')[0]?.type === 'reload') {
+        const previousRestoration = history.scrollRestoration;
+        history.scrollRestoration = 'manual';
+        history.replaceState(history.state, '', location.pathname + location.search + '#home');
+        window.addEventListener('pageshow', () => {
+          requestAnimationFrame(() => {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            history.scrollRestoration = previousRestoration;
+          });
+        }, { once: true });
+      }
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c0e10" />
+    <meta name="description" content="Sayak's personal portfolio — a space for projects, skills, hackathons, internships, and experience." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Sayak — Developer Portfolio</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
